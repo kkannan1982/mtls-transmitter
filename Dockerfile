@@ -9,7 +9,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o mtls-transmitter ./cmd/transmitter
 
 FROM alpine:3.12 as certs
 
-RUN apk add -U --no-cache ca-certificates
+RUN apk add -U --no-cache ca-certificates bash
 
 FROM scratch
 
@@ -20,4 +20,4 @@ COPY --from=builder /go/src/github.com/crabtree/mtls-transmitter/mtls-transmitte
 
 EXPOSE ${ENV}
 
-ENTRYPOINT ["/mtls-transmitter"]
+ENTRYPOINT ["/run-mtls-transmitter.sh"]
